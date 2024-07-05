@@ -1,0 +1,41 @@
+docker-compose down --remove-orphans --volumes
+docker-compose up --build -d
+docker ps -a
+docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Status}}"
+docker logs es-cluster-setup-1
+docker build . -t <image-name>
+docker run -p 8081:8081 <image-name>
+docker volume create --name persistent-data
+docker pull androidsdk/android-30
+
+docker run -d -p 6080:6080 -p 5554:5554 -p 5555:5555 -e EMULATOR_DEVICE="Samsung Galaxy S10" -e WEB_VNC=true --device /dev/kvm --name android-container budtmo/docker-android:emulator_11.0
+
+docker run -d -p 6080:6080 -p 5554:5554 -p 5555:5555 -e EMULATOR_DEVICE="Samsung Galaxy S10" -e WEB_VNC=true --device /dev/kvm --name android-container budtmo/docker-android:emulator_10.0
+docker run -d -p 6080:6080 -e EMULATOR_DEVICE="Samsung Galaxy S10" -e WEB_VNC=true --device /dev/kvm --name android-container budtmo/docker-android:emulator_11.0
+docker run -it -p 6080:6080 --rm -e WEB_VNC=true --device /dev/kvm --name android-container androidsdk/android-30:latest bash
+
+docker run --privileged -d -p 6080:6080 -p 5554:5554 -p 5555:5555 -e WEB_VNC=true --device /dev/kvm --name android-container androidsdk/android-30:latest bash
+
+
+docker run -e ADBKEY="$(cat ~/.android/adbkey)" --device /dev/kvm --publish 8554:8554/tcp --publish 5555:5555/tcp  us-docker.pkg.dev/android-emulator-268719/images/30-google-x64:30.1.2
+
+mkdir android/app/src/main/assets
+react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+react-native run-android
+
+
+
+echo no | ${ANDROID_HOME}/tools/bin/avdmanager create avd --abi "armeabi-v7a" --device 'Nexus 4' --force --name arm_emulator --package "system-images;android-25;google_apis;armeabi-v7a" --sdcard 64M
+
+%{ANDROID_HOME}%/tools/bin/avdmanager create avd --abi "armeabi-v7a" --device 'Nexus 4' --force --name arm_emulator --package "system-images;android-25;google_apis;armeabi-v7a" --sdcard 64M
+
+
+
+
+${ANDROID_HOME}/emulator/emulator \
+ -avd arm_emulator \
+ -gpu swiftshader_indirect \
+ -memory 512 \
+ -no-audio \
+ -no-boot-anim \
+ -no-window &
